@@ -11,15 +11,13 @@ class NewTaskForm extends React.Component {
 
   render() {
     const { placeholder, title, addItem } = this.props;
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      if (this.state.value.trim()) addItem(this.state.value);
+      this.setState({ value: '' });
+    };
     return (
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          addItem(this.state.value);
-          this.setState({ value: '' });
-        }}
-        className="header"
-      >
+      <form onSubmit={handleSubmit} className="header">
         <h1>{title}</h1>
         <label>
           Todo

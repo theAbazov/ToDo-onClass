@@ -17,7 +17,7 @@ class TaskList extends React.Component {
 }
 
 TaskList.propTypes = {
-  todos: PropTypes.string,
+  todos: PropTypes.any,
   changeCheck: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,

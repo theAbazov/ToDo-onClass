@@ -35,7 +35,7 @@ class TaskFilter extends React.Component {
 }
 
 TaskFilter.propTypes = {
-  filter: PropTypes.number,
+  filter: PropTypes.string,
   changeFilter: PropTypes.func.isRequired,
 };
 

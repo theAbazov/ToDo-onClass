@@ -8,7 +8,7 @@ class Task extends React.Component {
     super();
     this.state = {
       editing: false,
-      value: this.props.todo.body,
+      value: '',
     };
   }
 
@@ -30,13 +30,13 @@ class Task extends React.Component {
       <li className={checked ? 'completed' : this.state.editing ? 'editing' : null}>
         <div className="view">
           <input
-            id="input"
+            id={id}
             className="toggle"
             type="checkbox"
             onChange={(event) => changeCheck(id, event.target.checked)}
             checked={checked}
           />
-          <label htmlFor="input">
+          <label htmlFor={id}>
             <span className="description">{body}</span>
             <span className="created">
               {`created ${formatDistanceToNow(date, {
@@ -48,7 +48,7 @@ class Task extends React.Component {
           </label>
           <button
             type="button"
-            onClick={() => this.setState(({ editing }) => ({ editing: !editing }))}
+            onClick={() => this.setState(({ editing }) => ({ editing: !editing, value: this.props.todo.body }))}
             className="icon icon-edit"
           />
           <button type="button" onClick={() => deleteItem(id)} className="icon icon-destroy" />
