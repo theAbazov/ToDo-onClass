@@ -32,18 +32,18 @@ class App extends Component {
 
   changeCheck(ident, data) {
     this.setState(({ todos }) => ({
-      todos: todos.map((e) => {
-        if (ident === e.id) e.checked = data;
-        return e;
+      todos: todos.map((element) => {
+        if (ident === element.id) element.checked = data;
+        return element;
       }),
     }));
   }
 
   editItem(ident, text) {
     this.setState(({ todos }) => ({
-      todos: todos.map((e) => {
-        if (e.id === ident) e.body = text;
-        return e;
+      todos: todos.map((element) => {
+        if (element.id === ident) element.body = text;
+        return element;
       }),
     }));
   }
@@ -58,7 +58,7 @@ class App extends Component {
   }
 
   clearCompleted() {
-    this.setState(({ todos }) => ({ todos: todos.filter((e) => !e.checked) }));
+    this.setState(({ todos }) => ({ todos: todos.filter((element) => !element.checked) }));
   }
 
   changeFilter(data) {

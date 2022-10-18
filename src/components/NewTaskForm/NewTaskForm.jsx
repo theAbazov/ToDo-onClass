@@ -13,20 +13,23 @@ class NewTaskForm extends React.Component {
     const { placeholder, title, addItem } = this.props;
     return (
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
+        onSubmit={(event) => {
+          event.preventDefault();
           addItem(this.state.value);
           this.setState({ value: '' });
         }}
         className="header"
       >
         <h1>{title}</h1>
-        <input
-          className="new-todo"
-          placeholder={placeholder}
-          onChange={(event) => this.setState({ value: event.target.value })}
-          value={this.state.value}
-        />
+        <label>
+          Todo
+          <input
+            className="new-todo"
+            placeholder={placeholder}
+            onChange={(event) => this.setState({ value: event.target.value })}
+            value={this.state.value}
+          />
+        </label>
       </form>
     );
   }

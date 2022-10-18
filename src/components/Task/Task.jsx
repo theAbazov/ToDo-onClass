@@ -8,12 +8,12 @@ class Task extends React.Component {
     super();
     this.state = {
       editing: false,
-      value: '',
+      value: this.props.todo.body,
     };
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     const {
       editItem,
       todo: { id },
@@ -33,7 +33,7 @@ class Task extends React.Component {
             id="input"
             className="toggle"
             type="checkbox"
-            onChange={(e) => changeCheck(id, e.target.checked)}
+            onChange={(event) => changeCheck(id, event.target.checked)}
             checked={checked}
           />
           <label htmlFor="input">
@@ -56,7 +56,7 @@ class Task extends React.Component {
         {this.state.editing && (
           <form onSubmit={this.handleSubmit.bind(this)}>
             <input
-              onChange={(e) => this.setState({ value: e.target.value })}
+              onChange={(event) => this.setState({ value: event.target.value })}
               type="text"
               className="edit"
               value={this.state.value}
