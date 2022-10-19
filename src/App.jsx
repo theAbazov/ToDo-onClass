@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import './App.css';
-import Footer from './components/Footer/Footer';
-import NewTaskForm from './components/NewTaskForm/NewTaskForm';
-import TaskList from './components/TaskList/TaskList';
+import { Footer } from './components/Footer';
+import { NewTaskForm } from './components/NewTaskForm';
+import { TaskList } from './components/TaskList';
 
 class App extends Component {
   constructor() {
