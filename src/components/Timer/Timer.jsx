@@ -1,5 +1,4 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 
 class Timer extends React.Component {
@@ -45,7 +44,6 @@ class Timer extends React.Component {
       const seconds = Math.floor(time % 60) < 10 ? `0${Math.floor(time % 60)}` : `${Math.floor(time % 60)}`;
       return `${minutes}:${seconds}`;
     };
-
     return (
       <>
         <button className="icon icon-play" type="button" aria-label="Start" title="Start" onClick={this.startTimer} />
