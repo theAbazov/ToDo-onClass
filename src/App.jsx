@@ -14,12 +14,13 @@ class App extends Component {
     };
   }
 
-  addItem(value) {
+  addItem(value, timer) {
     const data = {
       id: this.state.todos.length + 1,
       body: value,
       checked: false,
       date: new Date(),
+      timer,
     };
     this.setState(({ todos }) => ({ todos: [...todos, data] }));
   }
@@ -65,6 +66,16 @@ class App extends Component {
     this.setState({ filter: data });
   }
 
+  onSetTimer(newTime, id) {
+    this.setState(({ todos }) => {
+      todos = todos.map((todo) => {
+        if (todo.id === id) todo.timer = newTime;
+        return todo;
+      });
+      return { todos };
+    });
+  }
+
   render() {
     return (
       <div className="todoapp">
@@ -74,6 +85,7 @@ class App extends Component {
           editItem={this.editItem.bind(this)}
           deleteItem={this.deleteItem.bind(this)}
           todos={this.filteredItems()}
+          onSetTimer={this.onSetTimer.bind(this)}
         />
         <Footer
           changeFilter={this.changeFilter.bind(this)}

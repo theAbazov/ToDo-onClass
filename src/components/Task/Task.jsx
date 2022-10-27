@@ -3,6 +3,8 @@ import { formatDistanceToNow } from 'date-fns';
 import KG from 'date-fns/locale/en-AU';
 import PropTypes from 'prop-types';
 
+import Timer from '../Timer/Timer';
+
 class Task extends React.Component {
   constructor() {
     super();
@@ -24,8 +26,8 @@ class Task extends React.Component {
   }
 
   render() {
-    const { changeCheck, todo, deleteItem } = this.props;
-    const { body, id, checked, date } = todo;
+    const { changeCheck, todo, deleteItem, onSetTimer } = this.props;
+    const { body, id, checked, date, timer } = todo;
     return (
       <li className={checked ? 'completed' : this.state.editing ? 'editing' : null}>
         <div className="view">
@@ -37,8 +39,11 @@ class Task extends React.Component {
             checked={checked}
           />
           <label htmlFor={id}>
-            <span className="description">{body}</span>
-            <span className="created">
+            <span className="title">{body}</span>
+            <span className="descriptions">
+              <Timer id={id} timer={timer} onSetTimer={onSetTimer} />
+            </span>
+            <span className="description created">
               {`created ${formatDistanceToNow(date, {
                 includeSeconds: true,
                 locale: KG,

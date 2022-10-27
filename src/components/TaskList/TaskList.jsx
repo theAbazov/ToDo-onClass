@@ -5,11 +5,18 @@ import { Task } from '../Task';
 
 class TaskList extends React.Component {
   render() {
-    const { todos, changeCheck, editItem, deleteItem } = this.props;
+    const { todos, changeCheck, editItem, deleteItem, onSetTimer } = this.props;
     return (
       <ul className="todo-list">
         {todos.map((todo) => (
-          <Task key={todo.id} changeCheck={changeCheck} editItem={editItem} deleteItem={deleteItem} todo={todo} />
+          <Task
+            key={todo.id}
+            changeCheck={changeCheck}
+            editItem={editItem}
+            deleteItem={deleteItem}
+            todo={todo}
+            onSetTimer={onSetTimer}
+          />
         ))}
       </ul>
     );
