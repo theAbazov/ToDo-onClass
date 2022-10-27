@@ -42,29 +42,14 @@ class Timer extends React.Component {
 
     const formatTimer = (time) => {
       const minutes = `${Math.floor(time / 60)}`;
-      const seconds =
-        Math.floor(time % 60) < 10
-          ? `0${Math.floor(time % 60)}`
-          : `${Math.floor(time % 60)}`;
+      const seconds = Math.floor(time % 60) < 10 ? `0${Math.floor(time % 60)}` : `${Math.floor(time % 60)}`;
       return `${minutes}:${seconds}`;
     };
 
     return (
       <>
-        <button
-          className="icon icon-play"
-          type="button"
-          aria-label="Start"
-          title="Start"
-          onClick={this.startTimer}
-        />
-        <button
-          className="icon icon-pause"
-          type="button"
-          aria-label="Stop"
-          title="Stop"
-          onClick={this.stopTimer}
-        />
+        <button className="icon icon-play" type="button" aria-label="Start" title="Start" onClick={this.startTimer} />
+        <button className="icon icon-pause" type="button" aria-label="Stop" title="Stop" onClick={this.stopTimer} />
         {formatTimer(timer)}
       </>
     );
