@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 
 import TaskFilter from '../TaskFilter/TaskFilter';
 
-class Footer extends React.Component {
-  render() {
-    const { lefts, clearCompleted, changeFilter, filter } = this.props;
-    return (
-      <footer className="footer">
-        <span className="todo-count">{lefts} items left</span>
-        <TaskFilter filter={filter} changeFilter={changeFilter} />
-        <button type="button" onClick={clearCompleted} className="clear-completed">
-          Clear completed
-        </button>
-      </footer>
-    );
-  }
-}
+const Footer = ({ lefts, clearCompleted, changeFilter, filter }) => {
+  return (
+    <footer className="footer">
+      <span className="todo-count">{lefts} items left</span>
+      <TaskFilter filter={filter} changeFilter={changeFilter} />
+      <button type="button" onClick={clearCompleted} className="clear-completed">
+        Clear completed
+      </button>
+    </footer>
+  );
+};
 
 Footer.propTypes = {
   lefts: PropTypes.number,
