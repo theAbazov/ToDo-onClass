@@ -1,63 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
-class Timer extends React.Component {
-  constructor() {
-    super();
-    this.interval = false;
-  }
+const Timer = ({ id, timer, onSetTimer }) => {
+  const [active, setActive] = useState(true);
 
-  componentDidMount() {
-    this.startTimer();
-  }
+  useEffect(() => {
+    let interval;
+    if (timer > 0 && active) {
+      interval = setInterval(() => onSetTimer(timer - 1, id), 1000);
+    } else clearInterval(interval);
 
-  componentDidUpdate(prevProps) {
-    const { timer } = this.props;
-    if (timer !== prevProps.timer && timer === 0) this.stopTimer();
-  }
+    return () => clearInterval(interval);
+  }, [timer, active]);
 
-  componentWillUnmount() {
-    this.stopTimer();
-  }
+  useEffect(() => startTimer(), []);
 
-  startTimer = () => {
-    const { timer } = this.props;
-    const { id, onSetTimer } = this.props;
-    if (!this.interval && timer !== 0) {
-      this.interval = setInterval(() => {
-        const { timer: time } = this.props;
-        onSetTimer(time - 1, id);
-      }, 1000);
-    }
+  useEffect(() => () => stopTimer(), []);
+
+  const stopTimer = () => {
+    setActive(false);
   };
 
-  stopTimer = () => {
-    clearInterval(this.interval);
-    this.interval = false;
+  const startTimer = () => {
+    setActive(true);
   };
 
-  render() {
-    const { timer } = this.props;
-
-    const formatTimer = (time) => {
-      const minutes = `${Math.floor(time / 60)}`;
-      const seconds = Math.floor(time % 60) < 10 ? `0${Math.floor(time % 60)}` : `${Math.floor(time % 60)}`;
-      return `${minutes}:${seconds}`;
-    };
-    return (
-      <>
-        <button className="icon icon-play" type="button" aria-label="Start" title="Start" onClick={this.startTimer} />
-        <button className="icon icon-pause" type="button" aria-label="Stop" title="Stop" onClick={this.stopTimer} />
-        {formatTimer(timer)}
-      </>
-    );
-  }
-}
-
-Timer.propTypes = {
-  id: PropTypes.number.isRequired,
-  timer: PropTypes.number.isRequired,
-  onSetTimer: PropTypes.func.isRequired,
+  const formatTimer = (time) => {
+    const minutes = `${Math.floor(time / 60)}`;
+    const seconds = Math.floor(time % 60) < 10 ? `0${Math.floor(time % 60)}` : `${Math.floor(time % 60)}`;
+    return `${minutes}:${seconds}`;
+  };
+  return (
+    <>
+      <button className="icon icon-play" type="button" aria-label="Start" title="Start" onClick={startTimer} />
+      <button className="icon icon-pause" type="button" aria-label="Stop" title="Stop" onClick={stopTimer} />
+      {formatTimer(timer)}
+    </>
+  );
 };
 
 export default Timer;
