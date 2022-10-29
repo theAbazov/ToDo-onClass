@@ -1,77 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import KG from 'date-fns/locale/en-AU';
 import PropTypes from 'prop-types';
 
 import Timer from '../Timer/Timer';
 
-class Task extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      editing: false,
-      value: '',
-    };
-  }
+const Task = ({ changeCheck, todo, deleteItem, onSetTimer, editItem }) => {
+  const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState('');
 
-  handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const {
-      editItem,
-      todo: { id },
-    } = this.props;
-    editItem(id, this.state.value);
-    this.setState({ value: '' });
-    this.setState({ editing: false });
-  }
 
-  render() {
-    const { changeCheck, todo, deleteItem, onSetTimer } = this.props;
-    const { body, id, checked, date, timer } = todo;
-    return (
-      <li className={checked ? 'completed' : this.state.editing ? 'editing' : null}>
-        <div className="view">
-          <input
-            id={id}
-            className="toggle"
-            type="checkbox"
-            onChange={(event) => changeCheck(id, event.target.checked)}
-            checked={checked}
-          />
-          <label htmlFor={id}>
-            <span className="title">{body}</span>
-            <span className="descriptions">
-              <Timer id={id} timer={timer} onSetTimer={onSetTimer} />
-            </span>
-            <span className="description created">
-              {`created ${formatDistanceToNow(date, {
-                includeSeconds: true,
-                locale: KG,
-                addSuffix: true,
-              })}`}
-            </span>
-          </label>
-          <button
-            type="button"
-            onClick={() => this.setState(({ editing }) => ({ editing: !editing, value: this.props.todo.body }))}
-            className="icon icon-edit"
-          />
-          <button type="button" onClick={() => deleteItem(id)} className="icon icon-destroy" />
-        </div>
-        {this.state.editing && (
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <input
-              onChange={(event) => this.setState({ value: event.target.value })}
-              type="text"
-              className="edit"
-              value={this.state.value}
-            />
-          </form>
-        )}
-      </li>
-    );
-  }
-}
+    editItem(id, value);
+    setValue('');
+    setEditing(false);
+  };
+
+  const handleEditing = () => {
+    setEditing(true);
+    setValue(todo.body);
+  };
+
+  const { body, id, checked, date, timer } = todo;
+  return (
+    <li className={checked ? 'completed' : editing ? 'editing' : null}>
+      <div className="view">
+        <input
+          id={id}
+          className="toggle"
+          type="checkbox"
+          onChange={(event) => changeCheck(id, event.target.checked)}
+          checked={checked}
+        />
+        <label htmlFor={id}>
+          <span className="title">{body}</span>
+          <span className="descriptions">
+            <Timer id={id} timer={timer} onSetTimer={onSetTimer} />
+          </span>
+          <span className="description created">
+            {`created ${formatDistanceToNow(date, {
+              includeSeconds: true,
+              locale: KG,
+              addSuffix: true,
+            })}`}
+          </span>
+        </label>
+        <button type="button" onClick={handleEditing} className="icon icon-edit" />
+        <button type="button" onClick={() => deleteItem(id)} className="icon icon-destroy" />
+      </div>
+      {editing && (
+        <form onSubmit={handleSubmit}>
+          <input onChange={(event) => setValue(event.target.value)} type="text" className="edit" value={value} />
+        </form>
+      )}
+    </li>
+  );
+};
 
 Task.propTypes = {
   todo: PropTypes.shape({
