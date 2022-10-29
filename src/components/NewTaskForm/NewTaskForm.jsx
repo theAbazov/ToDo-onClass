@@ -36,7 +36,7 @@ class NewTaskForm extends React.Component {
       const timer = +min * 60 + +sec;
       console.log(timer);
       if (value.trim()) addItem(value, timer);
-      this.setState({ value: '', min: null, sec: null });
+      this.setState({ value: '', min: '', sec: '' });
     };
     return (
       <div className="header">
