@@ -1,89 +1,88 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import './App.css';
 import { Footer } from './components/Footer';
 import { NewTaskForm } from './components/NewTaskForm';
 import { TaskList } from './components/TaskList';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      todos: [],
-      filter: 'All',
-    };
-  }
+const App = () => {
+  const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState('All');
 
-  addItem(value) {
+  const addItem = (value, timer) => {
     const data = {
-      id: this.state.todos.length + 1,
+      id: todos.length + 1,
       body: value,
       checked: false,
       date: new Date(),
+      timer,
     };
-    this.setState(({ todos }) => ({ todos: [...todos, data] }));
-  }
+    setTodos((todos) => [...todos, data]);
+  };
 
-  deleteItem(ident) {
-    this.setState(({ todos }) => ({
-      todos: todos.filter(({ id }) => id !== ident),
-    }));
-  }
+  const deleteItem = (ident) => {
+    setTodos((todos) => todos.filter(({ id }) => id !== ident));
+  };
 
-  changeCheck(ident, data) {
-    this.setState(({ todos }) => ({
-      todos: todos.map((element) => {
-        if (ident === element.id) element.checked = data;
+  const changeCheck = (id, data) => {
+    setTodos((todos) => {
+      return todos.map((element) => {
+        if (id === element.id) element.checked = data;
         return element;
-      }),
-    }));
-  }
-
-  editItem(ident, text) {
-    this.setState(({ todos }) => ({
-      todos: todos.map((element) => {
-        if (element.id === ident) element.body = text;
-        return element;
-      }),
-    }));
-  }
-
-  filteredItems() {
-    const { todos, filter } = this.state;
-    return todos.filter(({ checked }) => {
-      const all = filter === 'All';
-      const completed = filter === 'Completed';
-      return all ? true : completed ? checked === true : checked === false;
+      });
     });
-  }
+  };
 
-  clearCompleted() {
-    this.setState(({ todos }) => ({ todos: todos.filter((element) => !element.checked) }));
-  }
+  const editItem = (id, text) => {
+    setTodos((todos) => {
+      return todos.map((element) => {
+        if (element.id === id) element.body = text;
+        return element;
+      });
+    });
+  };
 
-  changeFilter(data) {
-    this.setState({ filter: data });
-  }
+  const filteredItems = () => {
+    const all = filter === 'All';
+    const completed = filter === 'Completed';
+    return todos.filter(({ checked }) => (all ? true : completed ? checked === true : checked === false));
+  };
 
-  render() {
-    return (
-      <div className="todoapp">
-        <NewTaskForm title="Todos" placeholder="What needs to be done?" addItem={this.addItem.bind(this)} />
-        <TaskList
-          changeCheck={this.changeCheck.bind(this)}
-          editItem={this.editItem.bind(this)}
-          deleteItem={this.deleteItem.bind(this)}
-          todos={this.filteredItems()}
-        />
-        <Footer
-          changeFilter={this.changeFilter.bind(this)}
-          clearCompleted={this.clearCompleted.bind(this)}
-          lefts={this.state.todos.filter(({ checked }) => !checked).length}
-          filter={this.state.filter}
-        />
-      </div>
+  const clearCompleted = () => {
+    setTodos((todos) => todos.filter((element) => !element.checked));
+  };
+
+  const changeFilter = (data) => {
+    setFilter(data);
+  };
+
+  const onSetTimer = (newTime, id) => {
+    setTodos((todos) =>
+      todos.map((todo) => {
+        if (todo.id === id) todo.timer = newTime;
+        return todo;
+      })
     );
-  }
-}
+  };
+
+  return (
+    <div className="todoapp">
+      <NewTaskForm title="Todos" placeholder="What needs to be done?" addItem={addItem} />
+      <TaskList
+        changeCheck={changeCheck}
+        editItem={editItem}
+        deleteItem={deleteItem}
+        todos={filteredItems()}
+        onSetTimer={onSetTimer}
+      />
+      <Footer
+        changeFilter={changeFilter}
+        clearCompleted={clearCompleted}
+        lefts={todos.filter(({ checked }) => !checked).length}
+        filter={filter}
+      />
+    </div>
+  );
+};
 
 export default App;
