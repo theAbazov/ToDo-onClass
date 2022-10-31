@@ -6,27 +6,26 @@ class NewTaskForm extends React.Component {
     super();
     this.state = {
       value: '',
-      min: null,
-      sec: null,
+      min: '',
+      sec: '',
     };
   }
 
-  onMinValueChange = (event) => {
+  onMinValueChange(event) {
     let value = event.target.value;
-    console.log(value);
-    if (value < 0) return;
+    if (value < 0 || value > 999) return;
     this.setState({
       min: value,
     });
-  };
+  }
 
-  onSecValueChange = (event) => {
+  onSecValueChange(event) {
     const value = event.target.value;
-    if (value < 0) return;
+    if (value < 0 || value > 59) return;
     this.setState({
-      secValue: value,
+      sec: value,
     });
-  };
+  }
 
   render() {
     const { placeholder, title, addItem } = this.props;
@@ -34,7 +33,6 @@ class NewTaskForm extends React.Component {
     const handleSubmit = (event) => {
       event.preventDefault();
       const timer = +min * 60 + +sec;
-      console.log(timer);
       if (value.trim()) addItem(value, timer);
       this.setState({ value: '', min: '', sec: '' });
     };
@@ -54,10 +52,10 @@ class NewTaskForm extends React.Component {
           <label className="new-todo-form__timer-label">
             <input
               className="new-todo-form__timer"
-              onChange={this.onMinValueChange}
+              onChange={this.onMinValueChange.bind(this)}
               type="number"
               min={0}
-              placeholder={'MIN'}
+              placeholder={'Min'}
               value={min}
               required
             />
@@ -66,10 +64,10 @@ class NewTaskForm extends React.Component {
           <label className="new-todo-form__timer-label">
             <input
               className="new-todo-form__timer"
-              onChange={this.onSecValueChange}
+              onChange={this.onSecValueChange.bind(this)}
               type="number"
               min={0}
-              placeholder={'SEC'}
+              placeholder={'Sec'}
               value={sec}
               required
             />

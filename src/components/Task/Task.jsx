@@ -63,6 +63,7 @@ class Task extends React.Component {
             <input
               onChange={(event) => this.setState({ value: event.target.value })}
               type="text"
+              autoFocus
               className="edit"
               value={this.state.value}
             />

@@ -48,7 +48,7 @@ class Timer extends React.Component {
       <>
         <button className="icon icon-play" type="button" aria-label="Start" title="Start" onClick={this.startTimer} />
         <button className="icon icon-pause" type="button" aria-label="Stop" title="Stop" onClick={this.stopTimer} />
-        {formatTimer(timer)}
+        <span style={{ fontSize: '15px', marginLeft: '5px' }}>{formatTimer(timer)}</span>
       </>
     );
   }
