@@ -15,6 +15,7 @@ class App extends Component {
   }
 
   addItem(value, timer) {
+    let todos = this.state.todos;
     const data = {
       id: this.state.todos.length + 1,
       body: value,
@@ -22,31 +23,32 @@ class App extends Component {
       date: new Date(),
       timer,
     };
-    this.setState(({ todos }) => ({ todos: [...todos, data] }));
+    todos = [...todos, data];
+    this.setState({ todos });
   }
 
   deleteItem(ident) {
-    this.setState(({ todos }) => ({
-      todos: todos.filter(({ id }) => id !== ident),
-    }));
+    let todos = this.state.todos;
+    todos = todos.filter(({ id }) => id !== ident);
+    this.setState({ todos });
   }
 
   changeCheck(ident, data) {
-    this.setState(({ todos }) => ({
-      todos: todos.map((element) => {
-        if (ident === element.id) element.checked = data;
-        return element;
-      }),
-    }));
+    let todos = this.state.todos;
+    todos = todos.map((element) => {
+      if (ident === element.id) element.checked = data;
+      return element;
+    });
+    this.setState({ todos });
   }
 
   editItem(ident, text) {
-    this.setState(({ todos }) => ({
-      todos: todos.map((element) => {
-        if (element.id === ident) element.body = text;
-        return element;
-      }),
-    }));
+    let todos = this.state.todos;
+    todos = todos.map((element) => {
+      if (element.id === ident) element.body = text;
+      return element;
+    });
+    this.setState({ todos });
   }
 
   filteredItems() {
@@ -59,7 +61,9 @@ class App extends Component {
   }
 
   clearCompleted() {
-    this.setState(({ todos }) => ({ todos: todos.filter((element) => !element.checked) }));
+    let todos = this.state.todos;
+    todos = todos.filter((element) => !element.checked);
+    this.setState({ todos });
   }
 
   changeFilter(data) {
@@ -67,13 +71,12 @@ class App extends Component {
   }
 
   onSetTimer(newTime, id) {
-    this.setState(({ todos }) => {
-      todos = todos.map((todo) => {
-        if (todo.id === id) todo.timer = newTime;
-        return todo;
-      });
-      return { todos };
+    let todos = this.state.todos;
+    todos = todos.map((todo) => {
+      if (todo.id === id) todo.timer = newTime;
+      return todo;
     });
+    this.setState({ todos });
   }
 
   render() {

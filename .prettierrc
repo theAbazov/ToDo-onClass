@@ -2,6 +2,7 @@
   "singleQuote": true,
   "trailingComma": "es5",
   "endOfLine": "lf",
+  "importOrder": ["^react", "(.css)$", "(.scss)$", "^[a-zA-Z]", "^[{../,./}]"],
   "printWidth": 120,
   "semi": true
 }
