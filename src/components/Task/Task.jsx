@@ -51,7 +51,13 @@ const Task = ({ changeCheck, todo, deleteItem, onSetTimer, editItem }) => {
       </div>
       {editing && (
         <form onSubmit={handleSubmit}>
-          <input onChange={(event) => setValue(event.target.value)} type="text" className="edit" value={value} />
+          <input
+            autoFocus
+            onChange={(event) => setValue(event.target.value)}
+            type="text"
+            className="edit"
+            value={value}
+          />
         </form>
       )}
     </li>

@@ -33,7 +33,7 @@ const Timer = ({ id, timer, onSetTimer }) => {
     <>
       <button className="icon icon-play" type="button" aria-label="Start" title="Start" onClick={startTimer} />
       <button className="icon icon-pause" type="button" aria-label="Stop" title="Stop" onClick={stopTimer} />
-      {formatTimer(timer)}
+      <span style={{ fontSize: '15px', marginLeft: '5px' }}>{formatTimer(timer)}</span>
     </>
   );
 };

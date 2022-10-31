@@ -18,14 +18,14 @@ const NewTaskForm = ({ placeholder, title, addItem }) => {
 
   const onSecValueChange = (event) => {
     const value = event.target.value;
-    if (value < 0) return;
+    if (value < 0 || value > 59) return;
     setSec(value);
   };
 
   const onMinValueChange = (event) => {
     let value = event.target.value;
     console.log(value);
-    if (value < 0) return;
+    if (value < 0 || value > 999) return;
     setMin(value);
   };
 
