@@ -9,7 +9,6 @@ const NewTaskForm = ({ placeholder, title, addItem }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const timer = +min * 60 + +sec;
-    console.log(timer);
     if (value.trim()) addItem(value, timer);
     setValue('');
     setMin('');
@@ -24,7 +23,6 @@ const NewTaskForm = ({ placeholder, title, addItem }) => {
 
   const onMinValueChange = (event) => {
     let value = event.target.value;
-    console.log(value);
     if (value < 0 || value > 999) return;
     setMin(value);
   };
